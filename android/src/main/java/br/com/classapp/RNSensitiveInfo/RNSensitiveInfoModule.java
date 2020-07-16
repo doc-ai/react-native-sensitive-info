@@ -29,6 +29,8 @@ import com.facebook.react.bridge.WritableNativeMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 import java.security.KeyStore;
+import java.nio.charset.Charset;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,6 +43,7 @@ import javax.crypto.spec.IvParameterSpec;
 import br.com.classapp.RNSensitiveInfo.utils.AppConstants;
 import br.com.classapp.RNSensitiveInfo.view.Fragments.FingerprintAuthenticationDialogFragment;
 import br.com.classapp.RNSensitiveInfo.view.Fragments.FingerprintUiHelper;
+
 
 public class RNSensitiveInfoModule extends ReactContextBaseJavaModule {
 
@@ -148,7 +151,6 @@ public class RNSensitiveInfoModule extends ReactContextBaseJavaModule {
         }
 
         String value = prefs(name).getString(key, null);
-
         if (value != null && options.hasKey("touchID") && options.getBoolean("touchID")) {
             boolean showModal = options.hasKey("showModal") && options.getBoolean("showModal");
             HashMap strings = options.hasKey("strings") ? options.getMap("strings").toHashMap() : new HashMap();
