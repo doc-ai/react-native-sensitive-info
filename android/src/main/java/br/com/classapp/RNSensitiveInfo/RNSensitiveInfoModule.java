@@ -143,6 +143,9 @@ public class RNSensitiveInfoModule extends ReactContextBaseJavaModule {
     public void getItem(String key, ReadableMap options, Promise pm) {
 
         String name = sharedPreferences(options);
+        if (name.equals("FlutterSecureStorage")) {
+            key = "VGhpcyBpcyB0aGUgcHJlZml4IGZvciBhIHNlY3VyZSBzdG9yYWdlCg_" + key;
+        }
 
         String value = prefs(name).getString(key, null);
 
@@ -152,7 +155,15 @@ public class RNSensitiveInfoModule extends ReactContextBaseJavaModule {
 
             decryptWithAes(value, showModal, strings, pm, null);
         } else {
-            pm.resolve(value);
+            if (name.equals("FlutterSecureStorage")) {
+                StorageCipher18Implementation storageCipher = new StorageCipher18Implementation(getReactApplicationContext());
+                byte[] data = Base64.decode(value, 0);
+                byte[] result = storageCipher.decrypt(data);
+                String unencrypted = new String(result, Charset.forName("UTF-8"));
+                pm.resolve(unencrypted);
+            } else {
+                pm.resolve(value);
+            }
         }
     }
 

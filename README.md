@@ -1,5 +1,20 @@
 <img alt="GoStack" src="./cover.png" />
 
+
+
+## DOC - AI version:
+
+Modifications to getItem
+# getItem 
+Get Item will also grab from flutter secure store if you call it like this:
+The key name is same as the key of test key in Flutter 
+
+This branch will handle adding prefixes and unencrypting the flutter
+```
+sensitiveInfo.getItem('testKey', { sharedPreferencesName: 'FlutterSecureStorage' }).then(console.log);
+```
+Important not `getAllItem` will still return encrypted values
+
 <center>
 
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
