@@ -158,11 +158,17 @@ public class RNSensitiveInfoModule extends ReactContextBaseJavaModule {
             decryptWithAes(value, showModal, strings, pm, null);
         } else {
             if (name.equals("FlutterSecureStorage")) {
-                StorageCipher18Implementation storageCipher = new StorageCipher18Implementation(getReactApplicationContext());
-                byte[] data = Base64.decode(value, 0);
-                byte[] result = storageCipher.decrypt(data);
-                String unencrypted = new String(result, Charset.forName("UTF-8"));
-                pm.resolve(unencrypted);
+                try {
+
+                    StorageCipher18Implementation storageCipher = new StorageCipher18Implementation(getReactApplicationContext());
+                    byte[] data = Base64.decode(value, 0);
+                    byte[] result = storageCipher.decrypt(data);
+                    String unencrypted = new String(result, Charset.forName("UTF-8"));
+                    pm.resolve(unencrypted);
+                } catch (Exception e) {
+                    Log.d("RNSensitiveInfo", e.getCause().getMessage());
+                    pm.reject(e);
+                }
             } else {
                 pm.resolve(value);
             }
